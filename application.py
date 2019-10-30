@@ -55,11 +55,21 @@ def newRestaurant():
     # return render_template('newrestaurant.html')
 
 
-@app.route('/restaurant/<int:restaurant_id>/edit/')
+@app.route('/restaurant/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
 def editRestaurant(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            restaurant.name = request.form['name']
+            session.add(restaurant)
+            session.commit()
+            return redirect(url_for('showRestaurants'))
+    else:
+        return render_template(
+            'editRestaurant.html', restaurant=restaurant)
+
 	# return "edit restaurant number %s " % restaurant_id
-    return render_template('editrestaurant.html', restaurant = restaurant)
+    # return render_template('editrestaurant.html', restaurant = restaurant)
 
 
 @app.route('/restaurant/<int:restaurant_id>/delete/')
@@ -93,8 +103,24 @@ def newMenuItem(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/edit/')
 def editMenuItem(restaurant_id, item_id):
     item = session.query(MenuItem).filter_by(id=item_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            item.name = request.form['name']
+        if request.form['description']:
+            item.description = request.form['name']
+        if request.form['price']:
+            item.price = request.form['price']
+        if request.form['course']:
+            item.course = request.form['course']
+        session.add(item)
+        session.commit()
+        return redirect(url_for('showRestaurant', restaurant_id=restaurant_id))
+    else:
+
+        return render_template(
+            'editmenuitem.html', restaurant_id=restaurant_id, item=item)
 	# return "edit item number %s" % item_id
-    return render_template('editmenuitem.html', restaurant_id = restaurant_id, item = item)
+    # return render_template('editmenuitem.html', restaurant_id = restaurant_id, item = item)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/delete/')
