@@ -12,23 +12,24 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# Fake Restaurants
-restaurant = {'name': 'The CRUDdy Crab', 'id': '1'}
+# # Fake Restaurants
+# restaurant = {'name': 'The CRUDdy Crab', 'id': '1'}
 
-restaurants = [{'name': 'The CRUDdy Crab', 'id': '1'}, {'name': 'Blue Burgers', 'id': '2'}, {'name': 'Taco Hut', 'id': '3'}]
+# restaurants = [{'name': 'The CRUDdy Crab', 'id': '1'}, {'name': 'Blue Burgers', 'id': '2'}, {'name': 'Taco Hut', 'id': '3'}]
 
 
-# Fake Menu Items
-items = [{'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree', 'id': '1'}, {'name': 'Chocolate Cake', 'description': 'made with Dutch Chocolate', 'price': '$3.99', 'course': 'Dessert', 'id': '2'}, {'name': 'Caesar Salad', 'description':'with fresh organic vegetables', 'price': '$5.99', 'course': 'Entree', 'id': '3'}, {'name': 'Iced Tea', 'description': 'with lemon', 'price': '$.99', 'course': 'Beverage', 'id': '4'}, {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer', 'id': '5'}]
-item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese','price': '$5.99', 'course': 'Entree'}
-# if a restaurant doesn't have any menu items
-# items = [] 
+# # Fake Menu Items
+# items = [{'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree', 'id': '1'}, {'name': 'Chocolate Cake', 'description': 'made with Dutch Chocolate', 'price': '$3.99', 'course': 'Dessert', 'id': '2'}, {'name': 'Caesar Salad', 'description':'with fresh organic vegetables', 'price': '$5.99', 'course': 'Entree', 'id': '3'}, {'name': 'Iced Tea', 'description': 'with lemon', 'price': '$.99', 'course': 'Beverage', 'id': '4'}, {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer', 'id': '5'}]
+# item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese','price': '$5.99', 'course': 'Entree'}
+# # if a restaurant doesn't have any menu items
+# # items = [] 
 
 
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
-	# return "This page shows all restaurants"	
+    restaurants = session.query(Restaurant).all()
+    # return "This page will show all my restaurants"
     return render_template('restaurants.html', restaurants=restaurants)
 
 
@@ -36,6 +37,8 @@ def showRestaurants():
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showRestaurant(restaurant_id):
 	# return "This page shows the menu for restaurant number %s" % restaurant_id
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    items = session.query(MenuItem).filter_by(restaurant_id=restaurant_id).all()
     return render_template('restaurant.html', items=items, restaurant=restaurant)
 
 
@@ -47,18 +50,22 @@ def newRestaurant():
 
 @app.route('/restaurant/<int:restaurant_id>/edit/')
 def editRestaurant(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
 	# return "edit restaurant number %s " % restaurant_id
     return render_template('editrestaurant.html', restaurant = restaurant)
 
 
 @app.route('/restaurant/<int:restaurant_id>/delete/')
 def deleteRestaurant(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
 	# return "delete restaurant number %s" % restaurant_id
     return render_template('deleterestaurant.html', restaurant = restaurant)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/')
 def showMenuItem(restaurant_id, item_id):
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    item = session.query(MenuItem).filter_by(id=item_id).one()
 	# return "This page shows the item number %s" % item_id
     return render_template('menuitem.html', restaurant = restaurant, item = item)
 
@@ -71,14 +78,16 @@ def newMenuItem(restaurant_id):
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/edit/')
 def editMenuItem(restaurant_id, item_id):
+    item = session.query(MenuItem).filter_by(id=item_id).one()
 	# return "edit item number %s" % item_id
-    return render_template('editmenuitem.html', restaurant = restaurant, item = item)
+    return render_template('editmenuitem.html', restaurant_id = restaurant_id, item = item)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/delete/')
 def deleteMenuItem(restaurant_id, item_id):
+    item = session.query(MenuItem).filter_by(id=item_id).one()
 	# return "delete item number %s" % item_id
-    return render_template('deletemenuitem.html', restaurant = restaurant, item = item)
+    return render_template('deletemenuitem.html', restaurant_id = restaurant_id, item = item)
 
 
 
