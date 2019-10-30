@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
@@ -42,10 +42,17 @@ def showRestaurant(restaurant_id):
     return render_template('restaurant.html', items=items, restaurant=restaurant)
 
 
-@app.route('/restaurant/new/')
+@app.route('/restaurant/new/', methods=['GET', 'POST'])
 def newRestaurant():
+    if request.method == 'POST':
+        newRestaurant = Restaurant(name=request.form['name'])
+        session.add(newRestaurant)
+        session.commit()
+        return redirect(url_for('showRestaurants'))
+    else:
+        return render_template('newRestaurant.html')
 	# return "add a new restaurant in this page"
-    return render_template('newrestaurant.html')
+    # return render_template('newrestaurant.html')
 
 
 @app.route('/restaurant/<int:restaurant_id>/edit/')
@@ -70,10 +77,17 @@ def showMenuItem(restaurant_id, item_id):
     return render_template('menuitem.html', restaurant = restaurant, item = item)
 
 
-@app.route('/restaurant/<int:restaurant_id>/menu/new/')
+@app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
 	# return "add a new item in the menu of restaurant number %s" % restaurant_id
-    return render_template('newmenuitem.html', restaurant = restaurant)
+    if request.method == 'POST':
+        newItem = MenuItem(name=request.form['name'], description=request.form['description'], price=request.form['price'], course=request.form['course'], restaurant_id=restaurant_id)
+        session.add(newItem)
+        session.commit()
+
+        return redirect(url_for('showRestaurant', restaurant_id=restaurant_id))
+    else:
+        return render_template('newmenuitem.html', restaurant_id=restaurant_id)    
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/edit/')
