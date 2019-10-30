@@ -9,7 +9,7 @@
 		
     {% if items !=[] %}
 
-		<a href = "#">Create New Item</a>
+		<a href = "{{url_for('newMenuItem', restaurant_id = restaurant.id )}}">Create New Item</a>
 	</br></br>
 
 	<h2>Appetizers</h2>
@@ -25,9 +25,9 @@
 
 		<p>{{i.price}}</p>
 	
-		<a href='#' >Edit</a>
+		<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Edit</a>
 	</br>
-	<a href='#' >Delete</a>
+	<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Delete</a>
 </br>
 </br>
 		{% endif %}
@@ -51,9 +51,9 @@
 
 		<p>{{i.price}}</p>
 	
-		<a href='#' >Edit</a>
+		<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Edit</a>
 	</br>
-	<a href='#' >Delete</a>
+	<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Delete</a>
 </br>
 </br>
         {% endif %}
@@ -77,9 +77,9 @@
 
 		<p>{{i.price}}</p>
 	
-		<a href='#' >Edit</a>
+		<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Edit</a>
 	
-	<a href='#' >Delete</a>
+	<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Delete</a>
 </br>
 </br>
 		{% endif %}
@@ -103,9 +103,9 @@
 
 		<p>{{i.price}}</p>
 
-		<a href='#' >Edit</a>
+		<a href='{{url_for('editMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Edit</a>
 		</br>
-		<a href='#' >Delete</a>
+		<a href='{{url_for('deleteMenuItem', restaurant_id = restaurant.id, item_id=i.id ) }}' >Delete</a>
 		</br>
 		</br>
 		{% endif %}
