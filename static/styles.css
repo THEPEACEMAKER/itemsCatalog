@@ -1,0 +1,245 @@
+body {
+	margin: 0;
+	position: relative;
+}	
+.card-shadow {
+		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+.card {
+	display: flex;
+	flex-direction: column;
+	font-size: 16px;
+	font-weight: 400;
+	height: 200px;
+	overflow: hidden;
+	width: 30%;
+	z-index: 1;
+	position: relative;
+	background: #fff;
+	border-radius: 2px;
+	box-sizing: border-box;
+	margin: 0 20px 40px;
+	float: left;
+}
+
+.card .title {
+	align-items: center;
+	color: #000;
+	display: flex;
+	justify-content: stretch;
+	line-height: normal;
+	padding: 16px 16px 0 16px;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.card .title span {
+	position: absolute;
+	right: 16px;
+}
+
+.card .text {
+	color: rgba(0, 0, 0, .54);
+	/*font-size: 13px;*/
+	line-height: 18px;
+	overflow: hidden;
+	padding: 16px;
+	width: 90%;
+}	
+
+h1 {
+	text-align: center;
+	/*color: white;*/
+	background-color: #eee;
+	margin-top: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+footer {
+	background-color: #eee;
+	text-align: center;
+	width: 100%;
+	padding: 10px 0;
+	margin-top: 10px;
+}
+
+.content {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.button {
+  background-color: red;
+  color: white;
+  padding: 14px 10px;
+  text-align: center;  
+  text-decoration: none;
+}
+
+.card .button {
+  width: 50px;
+  margin: 0 5px;
+  float:left; 
+  display:inline;	
+}
+
+.buttons {
+	padding: 0 16px 16px 16px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#new {
+	margin: 30px;
+    text-align: center;	
+}
+
+.title a {
+	text-decoration: none;
+	color: #000;
+	font-size: 20px;
+}
+
+.center{
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+	position: relative;
+	display: inline-block;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+h2:before {
+    left: -40px;
+}
+h2:after {
+    right: -40px;
+}
+h2:before, h2:after {
+    content: "";
+    position: absolute;
+    bottom: 10px;
+    height: 1px;
+    width: 40px;
+    margin: 0 -15px;
+    background-color: #533834;
+}
+
+#oneItem footer {
+	position: fixed;
+    bottom: 0;
+}
+#oneItem .content {
+	position: fixed;
+    top: 50%;
+    margin-top: -100px;
+    width: 100%;
+}
+
+#oneItem .card {
+	margin: auto auto;
+}
+
+.restaurant {
+	width: 100%;
+	margin: 10px 0;
+}
+
+.restaurant .card {
+	margin: auto;
+	float: none;
+}
+
+/*wdith of body in the card page is 1366 instead of 1349
+cause of the scroll bar
+*/
+
+form {
+	width: 450px;
+	font-size: 16px;
+	background: #495C70;
+	padding: 30px 30px 15px 30px;
+	border: 5px solid #53687E;
+}
+form input[type=submit],
+form input[type=button],
+form input[type=text],
+form input[type=email],
+form textarea,
+form label
+{
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 16px;
+	color: #fff;
+
+}
+form label {
+	display:block;
+	margin-bottom: 10px;
+}
+form label > span{
+	display: inline-block;
+	float: left;
+	width: 150px;
+}
+form input[type=text],
+form input[type=email] 
+{
+	background: transparent;
+	border: none;
+	border-bottom: 1px dashed #83A4C5;
+	width: 275px;
+	outline: none;
+	padding: 0px 0px 0px 0px;
+	font-style: italic;
+}
+form textarea{
+	font-style: italic;
+	padding: 0px 0px 0px 0px;
+	background: transparent;
+	outline: none;
+	border: none;
+	border-bottom: 1px dashed #83A4C5;
+	width: 275px;
+	overflow: hidden;
+	resize:none;
+	height:20px;
+}
+
+form textarea:focus, 
+form input[type=text]:focus,
+form input[type=email]:focus,
+form input[type=email] :focus
+{
+	border-bottom: 1px dashed #D9FFA9;
+}
+
+form input[type=submit],
+form input[type=button]{
+	background: #576E86;
+	border: none;
+	padding: 8px 10px 8px 10px;
+	border-radius: 5px;
+	color: #A8BACE;
+}
+form input[type=submit]:hover,
+form input[type=button]:hover{
+background: #394D61;
+}
+
+/*centering the form*/
+form {
+	margin: auto auto;
+}
+
+/*right buttons*/
+form input[type=submit],
+form input[type=button]{
+	float: right;
+    margin: 10px;	
+}

@@ -2,9 +2,9 @@
 
 
 <head>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">		
 </head>
-
-<body>
+<body id="oneItem">
 
 <h1> Edit Restaurant </h1>
 
@@ -16,12 +16,12 @@
 		<input type ='text' size='30' name='name' placeholder = '{{restaurant.name }}'>
 
 
+<a href = '{{url_for('showRestaurants')}}'><input type="button" value="cancel" /></a>
 <input type='submit' value='Edit'>
 
 
-<a href = '{{url_for('showRestaurants')}}'> Cancel </a>
-
 </form>
+<footer>Made by <a href="https://www.linkedin.com/in/adel-a-abdelkader/">Adel Abdellatif</a></footer>
 </body>
 
 </html>
