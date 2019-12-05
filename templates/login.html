@@ -10,7 +10,7 @@
   function start() {
     gapi.load('auth2', function() {
       auth2 = gapi.auth2.init({
-        client_id: '830596124419-uf7o77130d9edgev9agschcv0272c9i0.apps.googleusercontent.com',
+        client_id: '830596124419-4jti0ntdo71t3i53la71rot3f45rfo76.apps.googleusercontent.com',
         // Scopes to request in addition to 'profile' and 'email'
         //scope: 'additional_scope'
       });
@@ -71,8 +71,8 @@
           if (result) {
             $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...');
             setTimeout(function() {
-              // window.location.href = "/restaurants";
-              console.log('redirected');
+              window.location.href = "/restaurants";
+              // console.log('redirected');
             }, 4000);            
           } else if (authResult['error']) {
             console.log('There was an error: ' + authResult['error']);

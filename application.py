@@ -6,8 +6,19 @@ from database_setup import Base, Restaurant, MenuItem
 from flask import session as login_session
 import random, string
 
+# from apiclient import discovery
+import httplib2
+from oauth2client import client
+import json
+from flask import make_response
+import requests
+
 
 app = Flask(__name__)
+
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = "Restaurant Menu Application"
 
 # Connect to Database and create database session
 engine = create_engine('sqlite:///restaurantmenu.db')
@@ -27,14 +38,98 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
+    # (Receive auth_code by HTTPS POST)
+
+    # If this request does not have `X-Requested-With` header, this could be a CSRF
+    if not request.headers.get('X-Requested-With'):
+        abort(403)
+
+    # Validate state token
+    if request.args.get('state') != login_session['state']:
+        response = make_response(json.dumps('Invalid state parameter.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+
+    # Obtain authorization code
+    auth_code = request.data
+
+    # Set path to the Web application client_secret_*.json file you downloaded from the
+    # Google API Console: https://console.developers.google.com/apis/credentials
+    CLIENT_SECRET_FILE = 'client_secrets.json'
+
+    # Exchange auth code for access token, refresh token, and ID token
+    credentials = client.credentials_from_clientsecrets_and_code(
+        CLIENT_SECRET_FILE,
+        ['https://www.googleapis.com/auth/drive.appdata', 'profile', 'email'],
+        auth_code)
+
+    # Check that the access token is valid.
+    access_token = credentials.access_token
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
+           % access_token)
+    h = httplib2.Http()
+    result = json.loads(h.request(url, 'GET')[1])
+    # If there was an error in the access token info, abort.
+    # print result
+    if result.get('error') is not None:
+        response = make_response(json.dumps(result.get('error')), 500)
+        response.headers['Content-Type'] = 'application/json'
+        print "there was an error in the access token info"
+        return response
+
+    # Verify that the access token is used for the intended user.
+    userid = credentials.id_token['sub']
+    if result['user_id'] != userid:
+        response = make_response(
+            json.dumps("Token's user ID doesn't match given user ID."), 401)
+        response.headers['Content-Type'] = 'application/json'
+        print "Token's user ID doesn't match given user ID."
+        return response
+
+    # Verify that the access token is valid for this app.
+    if result['issued_to'] != CLIENT_ID:
+        response = make_response(
+            json.dumps("Token's client ID does not match app's."), 401)
+        response.headers['Content-Type'] = 'application/json'
+        print "Token's client ID does not match app's."
+        return response
+
+    # check if the user is already connected.
+    stored_access_token = login_session.get('access_token')
+    stored_userid = login_session.get('userid')
+    if stored_access_token is not None and userid == stored_userid:
+        response = make_response(json.dumps('Current user is already connected.'),
+                                 200)
+        response.headers['Content-Type'] = 'application/json'
+        flash('This user is already connected.')
+        return response
+
+    # Store the access token in the session for later use.
+    login_session['access_token'] = credentials.access_token
+    login_session['userid'] = userid
+
+    # Get user info
+    userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
+    params = {'access_token': credentials.access_token, 'alt': 'json'}
+    answer = requests.get(userinfo_url, params=params)
+
+    data = answer.json()
+
+    login_session['username'] = data['name']
+    login_session['picture'] = data['picture']
+    login_session['email'] = data['email']
+
+    # Get profile info from ID token
+    # email = credentials.id_token['email']
+
     output = ''
     output += '<h1>Welcome, '
-    # output += login_session['username']
+    output += login_session['username']
     output += '!</h1>'
     output += '<img src="'
-    # output += login_session['picture']
+    output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-    # flash("you are now logged in as %s" % login_session['username'])
+    flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output    
 
