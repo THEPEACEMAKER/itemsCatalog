@@ -25,6 +25,19 @@ def showLogin():
     # return "The current session state is %s" % login_session['state']
     return render_template('login.html', STATE=state)
 
+@app.route('/gconnect', methods=['POST'])
+def gconnect():
+    output = ''
+    output += '<h1>Welcome, '
+    # output += login_session['username']
+    output += '!</h1>'
+    output += '<img src="'
+    # output += login_session['picture']
+    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    # flash("you are now logged in as %s" % login_session['username'])
+    print "done!"
+    return output    
+
 
 # JSON APIs to view Restaurant Information
 @app.route('/JSON/')
