@@ -2,11 +2,8 @@ from flask import Flask, render_template, url_for, request, redirect, jsonify, f
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Restaurant, MenuItem
-
 from flask import session as login_session
 import random, string
-
-# from apiclient import discovery
 import httplib2
 from oauth2client import client
 import json
@@ -193,6 +190,10 @@ def showRestaurant(restaurant_id):
 
 @app.route('/restaurant/new/', methods=['GET', 'POST'])
 def newRestaurant():
+    if 'username' not in login_session:
+        flash("You must be logged in to view this page")
+        return redirect('/login')
+
     if request.method == 'POST':
         newRestaurant = Restaurant(name=request.form['name'])
         session.add(newRestaurant)
@@ -206,6 +207,10 @@ def newRestaurant():
 
 @app.route('/restaurant/<int:restaurant_id>/edit/', methods=['GET', 'POST'])
 def editRestaurant(restaurant_id):
+    if 'username' not in login_session:
+        flash("You must be logged in to view this page")
+        return redirect('/login')    
+
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -222,6 +227,10 @@ def editRestaurant(restaurant_id):
 
 @app.route('/restaurant/<int:restaurant_id>/delete/', methods=['GET', 'POST'])
 def deleteRestaurant(restaurant_id):
+    if 'username' not in login_session:
+        flash("You must be logged in to view this page")
+        return redirect('/login')    
+
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     if request.method == 'POST':
         session.delete(restaurant)
@@ -246,6 +255,10 @@ def showMenuItem(restaurant_id, item_id):
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new/', methods=['GET', 'POST'])
 def newMenuItem(restaurant_id):
+    if 'username' not in login_session:
+        flash("You must be logged in to view this page")
+        return redirect('/login')    
+
     if request.method == 'POST':
         newItem = MenuItem(name=request.form['name'], description=request.form['description'], price=request.form['price'], course=request.form['course'], restaurant_id=restaurant_id)
         session.add(newItem)
@@ -259,6 +272,10 @@ def newMenuItem(restaurant_id):
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/edit/', methods=['GET', 'POST'])
 def editMenuItem(restaurant_id, item_id):
+    if 'username' not in login_session:
+        flash("You must be logged in to view this page")
+        return redirect('/login')    
+
     item = session.query(MenuItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -282,6 +299,10 @@ def editMenuItem(restaurant_id, item_id):
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, item_id):
+    if 'username' not in login_session:
+        flash("You must be logged in to view this page")
+        return redirect('/login')    
+
     item = session.query(MenuItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         session.delete(item)
