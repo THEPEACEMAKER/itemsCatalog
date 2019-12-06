@@ -201,7 +201,8 @@ def showRestaurant(restaurant_id):
     items = session.query(MenuItem).filter_by(
         restaurant_id=restaurant_id).all()
     return render_template(
-        'restaurant.html', items=items, restaurant=restaurant)
+        'restaurant.html', items=items, restaurant=restaurant,
+        login_session=login_session)
     # return "This page shows the menu for restaurant number %s" %restaurant_id
 
 
@@ -218,7 +219,8 @@ def newRestaurant():
         flash("new Restaurant created!")
         return redirect(url_for('showRestaurants'))
     else:
-        return render_template('newRestaurant.html')
+        return render_template(
+            'newRestaurant.html', login_session=login_session)
     # return "add a new restaurant in this page"
 
 
@@ -238,7 +240,8 @@ def editRestaurant(restaurant_id):
             return redirect(url_for('showRestaurants'))
     else:
         return render_template(
-            'editRestaurant.html', restaurant=restaurant)
+            'editRestaurant.html', restaurant=restaurant,
+            login_session=login_session)
     # return "edit restaurant number %s " % restaurant_id
 
 
@@ -257,7 +260,8 @@ def deleteRestaurant(restaurant_id):
             url_for('showRestaurants'))
     else:
         return render_template(
-            'deleterestaurant.html', restaurant=restaurant)
+            'deleterestaurant.html', restaurant=restaurant,
+            login_session=login_session)
     # return "delete restaurant number %s" % restaurant_id
 
 
@@ -266,7 +270,9 @@ def deleteRestaurant(restaurant_id):
 def showMenuItem(restaurant_id, item_id):
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     item = session.query(MenuItem).filter_by(id=item_id).one()
-    return render_template('menuitem.html', restaurant=restaurant, item=item)
+    return render_template(
+        'menuitem.html',
+        restaurant=restaurant, item=item, login_session=login_session)
     # return "This page shows the item number %s" % item_id
 
 
@@ -289,7 +295,9 @@ def newMenuItem(restaurant_id):
         flash("Item was created successfully!")
         return redirect(url_for('showRestaurant', restaurant_id=restaurant_id))
     else:
-        return render_template('newmenuitem.html', restaurant_id=restaurant_id)
+        return render_template(
+            'newmenuitem.html',
+            restaurant_id=restaurant_id, login_session=login_session)
     # return "add a new item in the menu of restaurant number %s"%restaurant_id
 
 
@@ -318,7 +326,8 @@ def editMenuItem(restaurant_id, item_id):
     else:
 
         return render_template(
-            'editmenuitem.html', restaurant_id=restaurant_id, item=item)
+            'editmenuitem.html', restaurant_id=restaurant_id, item=item,
+            login_session=login_session)
     # return "edit item number %s" % item_id
 
 
@@ -338,7 +347,8 @@ def deleteMenuItem(restaurant_id, item_id):
         return redirect(url_for('showRestaurant', restaurant_id=restaurant_id))
     else:
         return render_template(
-            'deletemenuitem.html', restaurant_id=restaurant_id, item=item)
+            'deletemenuitem.html', restaurant_id=restaurant_id, item=item,
+            login_session=login_session)
     # return "delete item number %s" % item_id
 
 
