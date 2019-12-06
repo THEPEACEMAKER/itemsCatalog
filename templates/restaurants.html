@@ -27,14 +27,18 @@
 
 
 <body>
-<h1>Restaurants</h1>
-
+	<header>
+	<h1><a href="{{url_for('showRestaurants')}}" style="float: left;">Restaurants</a></h1>
 {% if 'username' in login_session %}
-	<a href="#" onclick="signOut();">Log out</a>
+	<div id="userData">
+		<img src="{{login_session['picture']}}">
+		<p>Welcome {{login_session['username']}}</p>
+	</div>
+	<a class="logButton" href="#" onclick="signOut();">Log out</a>
 {% else %}
-	<a href="{{url_for('showLogin')}}">Log In</a>
+	<a class="logButton" href="{{url_for('showLogin')}}">Log In</a>
 {% endif %}
-
+	</header>
 
 {% with messages = get_flashed_messages() %}    
 {% if messages %}
