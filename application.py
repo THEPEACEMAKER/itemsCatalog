@@ -134,11 +134,16 @@ def gconnect():
 @app.route('/gdisconnect')
 def gdisconnect():
     if request.args.get('status') == '200':
-        del login_session['access_token']
-        del login_session['userid']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
+        if 'access_token' in login_session:
+            del login_session['access_token']
+        if 'userid' in login_session:
+            del login_session['userid']
+        if 'username' in login_session:
+            del login_session['username']
+        if 'email' in login_session:
+            del login_session['email']
+        if 'picture' in login_session:
+            del login_session['picture']
         flash("Successfully disconnected.")
         print "Successfully disconnected."
         return redirect(url_for('showRestaurants'))
@@ -175,7 +180,7 @@ def menuItemJSON(restaurant_id, menu_id):
 @app.route('/restaurants/')
 def showRestaurants():
     restaurants = session.query(Restaurant).all()
-    return render_template('restaurants.html', restaurants=restaurants)
+    return render_template('restaurants.html', restaurants=restaurants, login_session=login_session)
     # return "This page will show all my restaurants"
 
 

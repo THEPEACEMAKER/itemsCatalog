@@ -2,11 +2,39 @@
 
 <head>
 	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="https://apis.google.com/js/platform.js?onload=start"></script>	
+	<script>
+		function signOut() {
+			gapi.load('auth2', function() {
+			    gapi.auth2.init({
+			        client_id: '830596124419-uf7o77130d9edgev9agschcv0272c9i0.apps.googleusercontent.com',
+			        scope: 'profile'
+			    }).then(() => { 
+			    	var auth2 = gapi.auth2.getAuthInstance();
+			    	auth2.signOut().then(function () {
+			    	  // console.log('User signed out.');
+
+			    	  setTimeout(function() {
+			    	    window.location.href = "/gdisconnect?status={{200}}";
+			    	  }, 1);
+			    	});
+				})
+			});
+		}
+	</script>
 </head>
 
 
 <body>
 <h1>Restaurants</h1>
+
+{% if 'username' in login_session %}
+	<a href="#" onclick="signOut();">Log out</a>
+{% else %}
+	<a href="{{url_for('showLogin')}}">Log In</a>
+{% endif %}
+
 
 {% with messages = get_flashed_messages() %}    
 {% if messages %}
@@ -41,7 +69,6 @@
 	<a  class="button" href="{{url_for('newRestaurant')}}" > Create a New Restaurant </a>
 </div>
 <footer>Made by <a href="https://www.linkedin.com/in/adel-a-abdelkader/">Adel Abdellatif</a></footer>
-
 </body>
 
 </html>

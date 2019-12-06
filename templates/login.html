@@ -27,29 +27,16 @@
 <body>  
 
 
-<!-- GOOGLE PLUS SIGN IN/out BUTTONS-->
+<!-- GOOGLE PLUS SIGN IN BUTTONS-->
 
 <button id="signinButton">Sign in with Google</button>
 
-<a href="#" onclick="signOut();">Sign out</a>
-
-<!--END GOOGLE PLUS SIGN IN/out BUTTONS -->
+<!--END GOOGLE PLUS SIGN IN BUTTONS -->
 
 <script>
   $('#signinButton').click(function() {
     auth2.grantOfflineAccess().then(signInCallback);
   });  
-
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      // console.log('User signed out.');
-
-      setTimeout(function() {
-        window.location.href = "/gdisconnect?status={{200}}";
-      }, 2000);
-    });
-  }
 
   function signInCallback(authResult) {
     if (authResult['code']) {
@@ -77,7 +64,7 @@
             setTimeout(function() {
               window.location.href = "/restaurants";
               // console.log('redirected');
-            }, 2000);            
+            }, 1);            
           } else if (authResult['error']) {
             console.log('There was an error: ' + authResult['error']);
           }
