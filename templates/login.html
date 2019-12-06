@@ -43,7 +43,11 @@
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      console.log('User signed out.');
+      // console.log('User signed out.');
+
+      setTimeout(function() {
+        window.location.href = "/gdisconnect?status={{200}}";
+      }, 2000);
     });
   }
 
@@ -73,7 +77,7 @@
             setTimeout(function() {
               window.location.href = "/restaurants";
               // console.log('redirected');
-            }, 4000);            
+            }, 2000);            
           } else if (authResult['error']) {
             console.log('There was an error: ' + authResult['error']);
           }

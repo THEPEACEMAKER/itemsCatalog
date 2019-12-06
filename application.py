@@ -133,6 +133,24 @@ def gconnect():
     print "done!"
     return output    
 
+# DISCONNECT - Revoke a current user's token and reset their login_session
+@app.route('/gdisconnect')
+def gdisconnect():
+    if request.args.get('status') == '200':
+        del login_session['access_token']
+        del login_session['userid']
+        del login_session['username']
+        del login_session['email']
+        del login_session['picture']
+        flash("Successfully disconnected.")
+        print "Successfully disconnected."
+        return redirect(url_for('showRestaurants'))
+    else:
+        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        print "Failed to revoke token for given user."
+        return response
+
 
 # JSON APIs to view Restaurant Information
 @app.route('/JSON/')
