@@ -1,11 +1,10 @@
-<html>
+{% extends "main.html" %}
+{% block content %}
 
-<head>
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">		
-</head>
-<body id="oneItem">
 
-<h1>New Menu Item</h1>
+<script type="text/javascript">
+	document.body.setAttribute("id", "oneItem");
+</script>
 
 <form action="{{url_for('newMenuItem', restaurant_id=restaurant_id)}}" method = 'post'>
 
@@ -28,6 +27,4 @@
 
 </form>
 
-<footer>Made by <a href="https://www.linkedin.com/in/adel-a-abdelkader/">Adel Abdellatif</a></footer>
-</body>
-</html>
+{% endblock %}

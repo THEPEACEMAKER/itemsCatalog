@@ -1,20 +1,6 @@
-<html>
-	
-<head>
-	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">	
-</head>
-<body>
-<h1>{{ restaurant.name }}</h1>
+{% extends "main.html" %}
+{% block content %}
 
-{% with messages = get_flashed_messages() %}    
-{% if messages %}
-<ul>
-{% for message in messages %}
-  <li><strong>{{message}}</strong></li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
 		
 		
 		
@@ -150,7 +136,6 @@
 <div id="new">
 	<a  class="button" href="{{url_for('newMenuItem', restaurant_id = restaurant.id )}}">Create A New Menu Item</a>
 </div>
-<footer>Made by <a href="https://www.linkedin.com/in/adel-a-abdelkader/">Adel Abdellatif</a></footer>
 
 		
 		
@@ -161,6 +146,5 @@
 			<a  class="button" href="{{url_for('newMenuItem', restaurant_id = restaurant.id )}}">Create A New Menu Item</a>
 		</div>
 			{% endif %}
-</body>
 
-</html>
+{% endblock %}
