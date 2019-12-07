@@ -24,6 +24,6 @@
 ### JSON End Points
 The restaurants page, one restaurant page and item details page show thier JSON end points, which can be created by appending `/JSON` to the URL
 
-- For the restaurants page, use `http://localhost:8000/restaurants/JSON/`
-- For items in a particular category use `http://localhost:8000/restaurant/rstaurantID/JSON/`
-- For a single item, use `http://localhost:8000/restaurant/rstaurantID/itemID/JSON/`
+- For the restaurants page, use `http://localhost:5000/restaurants/JSON/`
+- For items in a particular category use `http://localhost:5000/restaurant/rstaurantID/JSON/`
+- For a single item, use `http://localhost:5000/restaurant/rstaurantID/itemID/JSON/`
