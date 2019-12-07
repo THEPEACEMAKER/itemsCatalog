@@ -11,39 +11,39 @@
 
 
 	<p>Name:</p>
-		<input type ='text' size='30' name='name' placeholder = '{{item.name }}'>
+		<input required type ='text' size='30' name='name' placeholder = '{{item.name }}'>
 	<p>Description:</p>
-		<input type ='text' size='30' name='description' placeholder = '{{item.description}}'>
+		<input required type ='text' size='30' name='description' placeholder = '{{item.description}}'>
 	<p>Price:</p>
-		<input type ='text' size='30' name='price' placeholder = '{{item.price}}'>
+		<input required type ='number' size='30' name='price' placeholder = '{{item.price}}'>
 	<p>Course:<p>
 
 	{% if item.course == 'Appetizer' %}
-		<dd><input type ='radio' name='course' value='Appetizer'checked >Appetizer</dd>
+		<dd><input required type ='radio' name='course' value='Appetizer'checked >Appetizer</dd>
 	{%else%}
-	<dd><input type ='radio' name='course' value='Appetizer' >Appetizer</dd>
+	<dd><input required type ='radio' name='course' value='Appetizer' >Appetizer</dd>
     {% endif %}
 
     {% if item.course == 'Entree' %}
-       <dd><input type ='radio' name='course' value='Entree' checked>Entree</dd>
+       <dd><input required type ='radio' name='course' value='Entree' checked>Entree</dd>
 
     {%else%}
-		<dd><input type ='radio' name='course' value='Entree'>Entree</dd>
+		<dd><input required type ='radio' name='course' value='Entree'>Entree</dd>
     {% endif %}
 
 	{% if item.course == 'Dessert'%}
-		<dd><input type ='radio' name='course' value='Dessert'checked >Dessert</dd>
+		<dd><input required type ='radio' name='course' value='Dessert'checked >Dessert</dd>
 
 	{% else %}
-	   <dd><input type ='radio' name='course' value='Dessert'>Dessert</dd>
+	   <dd><input required type ='radio' name='course' value='Dessert'>Dessert</dd>
 
 	{% endif %}
 
 
 	{%if item.course =='Beverage'%}
-		<dd><input type ='radio' name='course' value='Beverage'checked >Beverage</dd>
+		<dd><input required type ='radio' name='course' value='Beverage'checked >Beverage</dd>
 	{% else %}
-		<dd><input type ='radio' name='course' value='Beverage'>Beverage</dd>
+		<dd><input required type ='radio' name='course' value='Beverage'>Beverage</dd>
 	{% endif %}
 
 
