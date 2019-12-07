@@ -47,7 +47,6 @@ class MenuItem(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
-
     @property
     def serialize(self):
         """Return object data in easily serializeable format"""
@@ -60,7 +59,9 @@ class MenuItem(Base):
         }
 
 
-engine = create_engine('sqlite:///restaurantmenuwithusers.db', connect_args={'check_same_thread':False})
+engine = create_engine(
+    'sqlite:///restaurantmenuwithusers.db',
+    connect_args={'check_same_thread': False})
 
 
 Base.metadata.create_all(engine)
