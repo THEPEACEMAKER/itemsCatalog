@@ -1,0 +1,21 @@
+{% extends "main.html" %}
+{% block content %}
+
+
+<script type="text/javascript">
+	document.body.setAttribute("id", "oneItem");
+</script>
+
+<div class="content">
+	<div class="card card-shadow">
+		<div class="title">
+			<a href="#">{{item.name}}</a>
+			<span>{{item.price}}</span>
+		</div>
+		<div class="text">
+			{{item.description}}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
