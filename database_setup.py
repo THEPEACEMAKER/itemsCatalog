@@ -60,7 +60,10 @@ class MenuItem(Base):
 
 
 engine = create_engine(
-    'postgresql://catalog:catalog@localhost/catalog',
+    # development phase, working with sqlite
+    'sqlite:///restaurantmenuwithusers.db',
+    # production phase (the server), , working with postgresql
+    # 'postgresql://catalog:catalog@localhost/catalog',
     connect_args={'check_same_thread': False})
 
 

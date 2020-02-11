@@ -15,13 +15,22 @@ import requests
 
 app = Flask(__name__)
 
+# for the local server
 CLIENT_ID = json.loads(
-    open(r'/var/www/catalog/catalog/client_secrets.json').read())['web']['client_id']
+    open('client_secrets.json', 'r').read())['web']['client_id']
+
+# for the Linux remote server
+# CLIENT_ID = json.loads(
+#     open(r'/var/www/catalog/catalog/client_secrets.json').read())['web']['client_id']
+
 APPLICATION_NAME = "Restaurant Menu Application"
 
 # Connect to Database and create database session
 engine = create_engine(
-    'postgresql://catalog:catalog@localhost/catalog',
+    # development phase, working with sqlite
+    'sqlite:///restaurantmenuwithusers.db',
+    # production phase (the server), , working with postgresql
+    # 'postgresql://catalog:catalog@localhost/catalog',
     connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 
@@ -435,5 +444,7 @@ def deleteMenuItem(restaurant_id, item_id):
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     # app.debug = True
-    # app.run(host='0.0.0.0', port=5000)
-    app.run()
+    # running on local server
+    app.run(host='0.0.0.0', port=5000)
+    # running on Linux remote server
+    # app.run()
